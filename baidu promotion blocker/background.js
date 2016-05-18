@@ -10,7 +10,8 @@ function getDomainFromUrl(url) {
 }
 
 function checkForValidUrl(tabId, changeInfo, tab) {
-    if (getDomainFromUrl(tab.url).toLowerCase() == "www.baidu.com") {
+    var site = getDomainFromUrl(tab.url).toLowerCase();
+    if (site == "www.baidu.com" || site == "tieba.baidu.com") {
         chrome.pageAction.show(tabId);
     }
 }
