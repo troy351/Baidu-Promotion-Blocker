@@ -1,6 +1,6 @@
 setInterval(function () {
     if (typeof $ == 'undefined') return;
-    
+
     if (location.href.indexOf('www.baidu.com') > 0) {
         // for search result promotion
 
@@ -9,6 +9,7 @@ setInterval(function () {
             var elem = $(element);
             var elemId = elem.attr('id') || '';
             var elemClass = elem.attr('class') || '';
+            elemClass=elemClass.slice(0,elemClass.indexOf(' '));
             if (elemId.match(/^\d{4}$/) || (elemClass.match(/^\w{6}$/) && elemClass != 'result')) {
                 elem.hide();
             }
@@ -20,7 +21,7 @@ setInterval(function () {
     else if (location.href.indexOf('tieba.baidu.com') > 0) {
         // for tieba promotion
 
-        // hide promotion in search result
+        // hide promotion in content list
         $('#thread_list > li').each(function (index, element) {
             var elem = $(element);
             if (!elem.hasClass('thread_top_list_folder') && !elem.hasClass('j_thread_list')) {
@@ -28,4 +29,4 @@ setInterval(function () {
             }
         });
     }
-}, 100);
+}, 500);
