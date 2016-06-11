@@ -9,7 +9,8 @@ setInterval(function () {
             var elem = $(element);
             var elemId = elem.attr('id') || '';
             var elemClass = elem.attr('class') || '';
-            elemClass=elemClass.slice(0,elemClass.indexOf(' '));
+            var spaceIndex=elemClass.indexOf(' ') > 0 ? elemClass.indexOf(' ') : elemClass.length;
+            elemClass=elemClass.slice(0,spaceIndex);
             if (elemId.match(/^\d{4}$/) || (elemClass.match(/^\w{6}$/) && elemClass != 'result')) {
                 elem.hide();
             }
