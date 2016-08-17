@@ -1,3 +1,4 @@
+// baidu promotion block
 setInterval(function () {
     if (typeof $ == 'undefined') return;
 
