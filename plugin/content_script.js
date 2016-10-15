@@ -12,7 +12,7 @@ setInterval(function () {
             var elemClass = elem.attr('class') || '';
             var spaceIndex=elemClass.indexOf(' ') > 0 ? elemClass.indexOf(' ') : elemClass.length;
             elemClass=elemClass.slice(0,spaceIndex);
-            if (elemId.match(/^\d{4}$/) || (elemClass.match(/^\w{6}$/) && elemClass != 'result')) {
+            if (elemId.match(/^\d{4}$/) || (elemClass.match(/^\w{6}$/) && elemClass != 'result') || elem.html().match(/<span class\="m">广告<\/span>/)) {
                 elem.hide();
             }
         });
