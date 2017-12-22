@@ -1,34 +1,62 @@
 // baidu promotion block
-setInterval(function () {
-    if (typeof $ == 'undefined') return;
+(function($) {
+  if (typeof $ === 'undefined') return;
 
-    if (location.href.indexOf('www.baidu.com') > 0) {
-        // for search result promotion
+  function restoreGlobalAPI(name) {
+    if (window[name]) return;
+    const iframe = document.createElement('iframe');
+    iframe.width = iframe.height = 0;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    window[name] = iframe.contentWindow[name];
+    iframe.remove();
+  }
 
-        // hide promotion in search result
-        $('#content_left > div').each(function (index, element) {
-            var elem = $(element);
-            var elemId = elem.attr('id') || '';
-            var elemClass = elem.attr('class') || '';
-            var spaceIndex=elemClass.indexOf(' ') > 0 ? elemClass.indexOf(' ') : elemClass.length;
-            elemClass=elemClass.slice(0,spaceIndex);
-            if (elemId.match(/^\d{4}$/) || (elemClass.match(/^\w{6}$/) && elemClass != 'result') || elem.html().match(/<span class\="m">广告<\/span>/)) {
-                elem.hide();
-            }
-        });
+  function hideAds() {
+    // hide promotion in search result
+    $('#content_left > div').each((index, element) => {
+      const elem = $(element);
+      const elemId = elem.attr('id') || '';
+      let elemClass = elem.attr('class') || '';
+      const spaceIndex = elemClass.indexOf(' ') > 0 ? elemClass.indexOf(' ') : elemClass.length;
+      elemClass = elemClass.slice(0, spaceIndex);
+      if (
+        elemId.match(/^\d{4}$/) ||
+        (elemClass.match(/^\w{6}$/) && elemClass != 'result') ||
+        elem.html().match(/<span class\="m">广告<\/span>/)
+      ) {
+        elem.hide();
+      }
+    });
 
-        // hide promotion on the bottom right
-        $('#ec_im_container').hide();
-    }
-    else if (location.href.indexOf('tieba.baidu.com') > 0) {
-        // for tieba promotion
+    // hide promotion on the bottom right
+    $('#ec_im_container').hide();
+  }
 
-        // hide promotion in content list
-        $('#thread_list > li').each(function (index, element) {
-            var elem = $(element);
-            if (!elem.hasClass('thread_top_list_folder') && !elem.hasClass('j_thread_list')) {
-                elem.hide();
-            }
-        });
-    }
-}, 500);
+  function detect() {
+    // prevent ads show delay
+    let count = 0;
+    (function() {
+      hideAds();
+      count++;
+      // use requestAnimationFrame to prevent blink
+      if (count < 150) requestAnimationFrame(arguments.callee);
+    }());
+  }
+
+  if (location.hostname === 'www.baidu.com') {
+    // restore api
+    restoreGlobalAPI('MutationObserver');
+
+    const observer = new MutationObserver(detect);
+    const wrapper = $('#wrapper_wrapper')[0];
+
+    observer.observe(wrapper, {
+      childList: true,
+      arrtibutes: true,
+    });
+
+    // trigger a detect when load
+    detect();
+  }
+}(jQuery));
