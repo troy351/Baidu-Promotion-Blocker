@@ -22,8 +22,8 @@
       elemClass = elemClass.slice(0, spaceIndex);
       if (
         elemId.match(/^\d{4}$/) ||
-        (elemClass.match(/^\w{6}$/) && elemClass != 'result') ||
-        elem.html().match(/<span class\="m">广告<\/span>/)
+        (elemClass.match(/^\w{6}$/) && elemClass !== 'result') ||
+        elem.html().includes('<span class="m">广告<\/span>')
       ) {
         elem.hide();
       }
