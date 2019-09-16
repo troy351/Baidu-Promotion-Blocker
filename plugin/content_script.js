@@ -30,7 +30,7 @@
     });
 
     // hide promotion on the bottom right
-    $('#ec_im_container').hide();
+    $('#ec_im_container, .ad-widget').hide();
   }
 
   function detect() {
