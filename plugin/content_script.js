@@ -23,7 +23,7 @@
       if (
         elemId.match(/^\d{4}$/) ||
         (elemClass.match(/^\w{6}$/) && elemClass !== 'result') ||
-        elem.html().includes('<span class="m">广告<\/span>')
+        elem.html().includes('<span class="m ec_tuiguang_pplink">广告</span>')
       ) {
         elem.hide();
       }
